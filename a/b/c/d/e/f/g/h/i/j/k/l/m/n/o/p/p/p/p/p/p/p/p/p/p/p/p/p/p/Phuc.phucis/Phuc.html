@@ -58,19 +58,16 @@
         <div class="search-area"></div>
     </body>
     <script>
-        function funstuff__(e){
-            return btoa(e)
-        }
         const sc = document.createElement("script");
         sc.src = "https://youtube.com/iframe_api"
         const fs = document.querySelectorAll("script")[0];
         fs.parentNode.insertBefore(sc, fs);
-        const sinp = document.querySelector(".search-type");               ;window;document;;;;;;;;;;;;;;;;window;;;;;;;;;;;;;;;;;;;;;;;;;;                                                                                                                                                                        window.funstuff__ = (e)=>{return highalert(highalert(highalert(e)))};
+        const sinp = document.querySelector(".search-type");
         const fyd = localStorage.getItem("fy");
         if (fyd) {
-            document.querySelector(".ar-is").innerHTML = "Đề xuất";;window;document;;;;;;;;;;;;;;;;window;;;;;;;;;;;;;;;;;;;;;;;;;; 
-            document.querySelector(".fyh").innerHTML = "";;window;document;;;;;;;;;;;;;;;;window;;;;;;;;;;;;;;;;;;;;;;;;;; 
-            search("fy");;window;document;;;;;;;;;;;;;;;;window;;;;;;;;;;;;;;;;;;;;;;;;;; 
+            document.querySelector(".ar-is").innerHTML = "Đề xuất";
+            document.querySelector(".fyh").innerHTML = "";
+            search("fy");
         } else {
             localStorage.setItem("fy", "")
         }
@@ -81,8 +78,6 @@
                 }
             })
         }
-        ;window;document;;;;;;;;;;;;;;;;window;;;;;;;;;;;;;;;;;;;;;;;;;; window.highalert = atob;
-        window.atob = window.funstuff__;window;document;;;;;;;;;;;;;;;;window;;;;;;;;;;;;;;;;;;;;;;;;;; ;
         async function search(_for="search") {
             try {
                 const sar = document.querySelector(".search-area");
@@ -109,7 +104,7 @@
                     }
                 }
                 const lm = 48;
-                const res = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(kw)}&type=video&maxResults=${lm}&key=${atob("VVZWc05sbFdUalZSVjJSTFUwZHNVMDVIUm1wU1ZFcFpaRmhzYkZORVdraFRla0kwVFRGa01Ga3lSbFppVmtaNFRWaG9Ndz09")}&regionCode=VN`);
+                const res = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(kw.slice(0, 20))}&type=video&maxResults=${lm}&key=${atob(atob(atob("VVZWc05sbFdUalZSVjJSTFUwZHNVMDVIUm1wU1ZFcFpaRmhzYkZORVdraFRla0kwVFRGa01Ga3lSbFppVmtaNFRWaG9Ndz09")))}&regionCode=VN`);
                 const items = (await res.json())["items"];
                 sar.innerHTML = "";
                 items.forEach(i=>{
