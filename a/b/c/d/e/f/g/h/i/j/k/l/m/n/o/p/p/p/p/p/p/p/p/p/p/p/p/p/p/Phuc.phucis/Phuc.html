@@ -102,7 +102,11 @@
                         localStorage.setItem("fy", localStorage.getItem("fy").split(" ").slice(1).join(" "));
                     }
                 } else {
-                    kw = fyd
+                    if (fyd){
+                        kw = fyd;
+                    } else {
+                        return
+                    }
                 }
                 const lm = 48;
                 const res = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(kw)}&type=video&maxResults=${lm}&key=${atob("VVZWc05sbFdUalZSVjJSTFUwZHNVMDVIUm1wU1ZFcFpaRmhzYkZORVdraFRla0kwVFRGa01Ga3lSbFppVmtaNFRWaG9Ndz09")}&regionCode=VN`);
