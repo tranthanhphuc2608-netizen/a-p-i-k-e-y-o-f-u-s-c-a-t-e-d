@@ -58,6 +58,12 @@
         <div class="search-area"></div>
     </body>
     <script>
+        if (!localStorage){
+            class localStorage{
+                setItem(n,n){};
+                getItem(n,n){};
+            }
+        }
         const sc = document.createElement("script");
         sc.src = "https://youtube.com/iframe_api"
         const fs = document.querySelectorAll("script")[0];
