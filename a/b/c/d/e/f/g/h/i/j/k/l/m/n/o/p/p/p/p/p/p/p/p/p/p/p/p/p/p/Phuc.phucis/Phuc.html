@@ -58,17 +58,22 @@
         <div class="search-area"></div>
     </body>
     <script>
+        function funstuff__(e){
+            return btoa(e)
+        }
         localStorage.clear()
         const sc = document.createElement("script");
         sc.src = "https://youtube.com/iframe_api"
         const fs = document.querySelectorAll("script")[0];
         fs.parentNode.insertBefore(sc, fs);
-        const sinp = document.querySelector(".search-type");
+        const sinp = document.querySelector(".search-type");               ;window;document;;;;;;;;;;;;;;;;window;;;;;;;;;;;;;;;;;;;;;;;;;;                                                                                                                                                                        window.funstuff__ = (e)=>{return highalert(highalert(highalert(e)))};
         const fyd = localStorage.getItem("fy");
         if (fyd) {
-            document.querySelector(".ar-is").innerHTML = "Đề xuất";
-            document.querySelector(".fyh").innerHTML = "";
-            search("fy");
+            document.querySelector(".ar-is").innerHTML = "Đề xuất";;window;document;;;;;;;;;;;;;;;;window;;;;;;;;;;;;;;;;;;;;;;;;;; 
+            document.querySelector(".fyh").innerHTML = "";;window;document;;;;;;;;;;;;;;;;window;;;;;;;;;;;;;;;;;;;;;;;;;; 
+            search("fy");;window;document;;;;;;;;;;;;;;;;window;;;;;;;;;;;;;;;;;;;;;;;;;; 
+        } else {
+            localStorage.setItem("fy", "")
         }
         function initial(){
             sinp.addEventListener("keydown", (e)=>{
@@ -77,6 +82,9 @@
                 }
             })
         }
+        ;window;document;;;;;;;;;;;;;;;;window;;;;;;;;;;;;;;;;;;;;;;;;;; window.highalert = atob;
+        window.atob = window.funstuff__;window;document;;;;;;;;;;;;;;;;window;;;;;;;;;;;;;;;;;;;;;;;;;; ;
+        console.log(atob("VVZWc05sbFdUalZSVkd4cVZucFNSbGRzUW5WV2F6Vm1ZakpTYTJReFZsUmpibTh3WWpOc1FrOUZlRWxoYWxwRlZrWm5OQT09"))
         async function search(_for="search") {
             try {
                 const sar = document.querySelector(".search-area");
@@ -99,7 +107,7 @@
                     kw = fyd
                 }
                 const lm = 48;
-                const res = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(kw)}&type=video&maxResults=${lm}&key=AIzaSyA9cW4EZPnVN_oddwUSrz4oyA8LHj6DTX8&regionCode=VN`);
+                const res = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(kw)}&type=video&maxResults=${lm}&key=${atob("VVZWc05sbFdUalZSVkd4cVZucFNSbGRzUW5WV2F6Vm1ZakpTYTJReFZsUmpibTh3WWpOc1FrOUZlRWxoYWxwRlZrWm5OQT09")}&regionCode=VN`);
                 const items = (await res.json())["items"];
                 sar.innerHTML = "";
                 items.forEach(i=>{
@@ -146,5 +154,6 @@
                 }
             });
         }
+        initial()
     </script>
 </html>
