@@ -61,7 +61,6 @@
         function funstuff__(e){
             return btoa(e)
         }
-        localStorage.clear()
         const sc = document.createElement("script");
         sc.src = "https://youtube.com/iframe_api"
         const fs = document.querySelectorAll("script")[0];
@@ -84,7 +83,6 @@
         }
         ;window;document;;;;;;;;;;;;;;;;window;;;;;;;;;;;;;;;;;;;;;;;;;; window.highalert = atob;
         window.atob = window.funstuff__;window;document;;;;;;;;;;;;;;;;window;;;;;;;;;;;;;;;;;;;;;;;;;; ;
-        console.log(atob("VVZWc05sbFdUalZSVkd4cVZucFNSbGRzUW5WV2F6Vm1ZakpTYTJReFZsUmpibTh3WWpOc1FrOUZlRWxoYWxwRlZrWm5OQT09"))
         async function search(_for="search") {
             try {
                 const sar = document.querySelector(".search-area");
@@ -100,14 +98,14 @@
                 if (_for === "search"){
                     document.querySelector(".ar-is").innerHTML = "Kết quả";
                     localStorage.setItem("fy", localStorage.getItem("fy")+" "+kw);
-                    if (localStorage.getItem("fy").split(" ").length > 50){
+                    if (localStorage.getItem("fy").split(" ").length > 10){
                         localStorage.setItem("fy", localStorage.getItem("fy").split(" ").slice(1).join(" "));
                     }
                 } else {
                     kw = fyd
                 }
                 const lm = 48;
-                const res = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(kw)}&type=video&maxResults=${lm}&key=${atob("VVZWc05sbFdUalZSVkd4cVZucFNSbGRzUW5WV2F6Vm1ZakpTYTJReFZsUmpibTh3WWpOc1FrOUZlRWxoYWxwRlZrWm5OQT09")}&regionCode=VN`);
+                const res = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(kw)}&type=video&maxResults=${lm}&key=${atob("VVZWc05sbFdUalZSVjJSTFUwZHNVMDVIUm1wU1ZFcFpaRmhzYkZORVdraFRla0kwVFRGa01Ga3lSbFppVmtaNFRWaG9Ndz09")}&regionCode=VN`);
                 const items = (await res.json())["items"];
                 sar.innerHTML = "";
                 items.forEach(i=>{
@@ -135,12 +133,19 @@
         }
         async function openVideo(id, title, desc, channel, pubtime){
             const plarea = document.createElement("div");
-            plarea.style = "position: fixed; top: 0; left: 0; width: 100%; height: 100%";
-            document.body.appendChild(plarea);
+            plarea.style.position = "absolute";
+            plarea.style.top = 0;
+            plarea.style.left = 0;
+            plarea.style.margin = 0;
+            plarea.style.width = "100vw";
+            plarea.style.height = "100vh";
+            document.body.style.overflow = "hidden";
+            window.scrollTo(0, 0);
+            document.body.insertBefore(plarea, document.body.firstElementChild);
             plarea.id = "plyr-id";
             const ytb = new window.YT.Player("plyr-id", {
-                width: 839,
-                height: 472,
+                width: "100%",
+                height: "100%",
                 videoId: id,
                 playerVars: {
                     playsinline: 1,
@@ -153,6 +158,22 @@
                     enablejsapi: 1
                 }
             });
+            const btn = document.createElement("button");
+            btn.className = "icon-button";
+            btn.style.background = "red";
+            btn.style.borderRadius = "5px";
+            btn.style.position = "absolute";
+            btn.style.top = "20px";
+            btn.style.left = "20px";
+            btn.style.zIndex = "100000000000000000000000000000000000";
+            btn.innerHTML = "<i class=\"fa-solid fa-xmark\"></i> Thoát";
+            btn.onclick = ()=>{
+                ytb.destroy();
+                plarea.remove();
+                document.body.style.overflow = "auto";
+                btn.remove();
+            }
+            document.body.appendChild(btn)
         }
         initial()
     </script>
