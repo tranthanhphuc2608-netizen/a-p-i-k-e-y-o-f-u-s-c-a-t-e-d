@@ -60,8 +60,14 @@
     <script>
         if (!localStorage){
             class localStorage{
-                setItem(n,n){};
-                getItem(n,n){};
+                setItem(k, v){
+                    let lst = JSON.parse(window.AppInventor.getWebViewString());
+                    lst[k] = v;
+                    window.AppInventor.setWebViewString(JSON.stringify(lst));
+                }
+                getItem(k){
+                    JSON.parse(window.AppInventor.getWebViewString())[k]
+                }
             }
         }
         const sc = document.createElement("script");
