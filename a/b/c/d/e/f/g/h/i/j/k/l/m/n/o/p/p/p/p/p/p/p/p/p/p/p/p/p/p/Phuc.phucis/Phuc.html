@@ -58,30 +58,31 @@
         <div class="search-area"></div>
     </body>
     <script>
-        if (!localStorage){
-            class localStorage{
+        let lacalsage = localStorage
+        if (!window.localStorage){
+            class lacalsage{
                 setItem(k, v){
                     let lst = JSON.parse(window.AppInventor.getWebViewString());
                     lst[k] = v;
                     window.AppInventor.setWebViewString(JSON.stringify(lst));
                 }
                 getItem(k){
-                    JSON.parse(window.AppInventor.getWebViewString())[k]
+                    return JSON.parse(window.AppInventor.getWebViewString())[k]
                 }
             }
         }
+        const sinp = document.querySelector(".search-type");
         const sc = document.createElement("script");
         sc.src = "https://youtube.com/iframe_api"
         const fs = document.querySelectorAll("script")[0];
-        fs.parentNode.insertBefore(sc, fs);
-        const sinp = document.querySelector(".search-type");
-        const fyd = localStorage.getItem("fy");
+        fs.parentNode.insertBefore(sc, fs)
+        const fyd = lacalsage.getItem("fy");
         if (fyd) {
             document.querySelector(".ar-is").innerHTML = "Đề xuất";
             document.querySelector(".fyh").innerHTML = "";
             search("fy");
         } else {
-            localStorage.setItem("fy", "")
+            lacalsage.setItem("fy", "")
         }
         function initial(){
             sinp.addEventListener("keydown", (e)=>{
@@ -104,9 +105,9 @@
                 sar.innerHTML = "Đang tải...";
                 if (_for === "search"){
                     document.querySelector(".ar-is").innerHTML = "Kết quả";
-                    localStorage.setItem("fy", localStorage.getItem("fy")+" "+kw);
-                    if (localStorage.getItem("fy").split(" ").length > 10){
-                        localStorage.setItem("fy", localStorage.getItem("fy").split(" ").slice(1).join(" "));
+                    lacalsage.setItem("fy", lacalsage.getItem("fy")+" "+kw);
+                    if (lacalsage.getItem("fy").split(" ").length > 10){
+                        lacalsage.setItem("fy", lacalsage.getItem("fy").split(" ").slice(1).join(" "));
                     }
                 } else {
                     if (fyd){
