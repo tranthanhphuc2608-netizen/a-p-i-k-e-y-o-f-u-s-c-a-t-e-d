@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+        <style>
+            * {
+                font-family: "Segoe UI", "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+                user-select: none;
+                margin: 5px;
+                padding: 1px;
+                font-size: 18px;
+                border-radius: 5px;
+            }
+            button {
+                border-radius: 50%;
+                border: 2px solid rgb(146, 146, 146);
+                background: white;
+                color: rgb(38, 0, 255);
+            }
+            button:active {
+                border-radius: 100%;
+                scale: 1;
+                background: rgb(206, 206, 206);
+            }
+            input {
+                border: 2px solid black;
+                caret-color: rgb(255, 0, 0);
+            }
+            input:focus {
+                font-size: 28px;
+            }
+            .icon-button {
+                border: none;
+            }
+            .search-type {
+                border: none;
+            }
+            .search-box {
+                border: 2px solid black;
+                padding: 15px;
+                border-radius: 20px;
+            }
+            .search-area {
+                display: flex;
+                flex-wrap: wrap;
+            }
+        </style>
+    </head>
+    <body>
+        <span style="color: red"><i class="fa-solid fa-play"></i></span>Youtube for TV Box
+        <span class="search-box">
+            <input class="search-type" placeholder="Nhập vào đây để tìm kiếm" style="width: 60%" aria-label="Tìm kiếm">
+            <button class="icon-button srchid" onclick="search()"><i class="fa-solid fa-search"></i></button>
+        </span>
+        <h1 class="ar-is">Tìm kiếm để bắt đầu</h1>
+        <span class="fyh">Đã tìm kiếm? <u><a onclick="window.location.reload(); document.querySelector('.fyh').innerHTML = 'Đang tải...'" style="color: blue" title="Nhấn để tải nội dung đề xuất">Tải nội dung đề xuất</a></u></span>
+        <div class="search-area"></div>
+    </body>
+    <script>
+        localStorage.clear()
+        const sc = document.createElement("script");
+        sc.src = "https://youtube.com/iframe_api"
+        const fs = document.querySelectorAll("script")[0];
+        fs.parentNode.insertBefore(sc, fs);
+        const sinp = document.querySelector(".search-type");
+        const fyd = localStorage.getItem("fy");
+        if (fyd) {
+            document.querySelector(".ar-is").innerHTML = "Đề xuất";
+            document.querySelector(".fyh").innerHTML = "";
+            search("fy");
+        }
+        function initial(){
+            sinp.addEventListener("keydown", (e)=>{
+                if (e.key === "Enter") {
+                    search();
+                }
+            })
+        }
+        async function search(_for="search") {
+            try {
+                const sar = document.querySelector(".search-area");
+                let kw = sinp.value;
+                if (!kw) {
+                    if (_for === "search"){
+                        return;
+                    }
+                }
+                document.querySelector(".srchid").disabled = true;
+                sinp.blur();
+                sar.innerHTML = "Đang tải...";
+                if (_for === "search"){
+                    document.querySelector(".ar-is").innerHTML = "Kết quả";
+                    localStorage.setItem("fy", localStorage.getItem("fy")+" "+kw);
+                    if (localStorage.getItem("fy").split(" ").length > 50){
+                        localStorage.setItem("fy", localStorage.getItem("fy").split(" ").slice(1).join(" "));
+                    }
+                } else {
+                    kw = fyd
+                }
+                const lm = 48;
+                const res = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(kw)}&type=video&maxResults=${lm}&key=AIzaSyA9cW4EZPnVN_oddwUSrz4oyA8LHj6DTX8&regionCode=VN`);
+                const items = (await res.json())["items"];
+                sar.innerHTML = "";
+                items.forEach(i=>{
+                    const vid = i.id.videoId;
+                    const snip = i.snippet;
+                    const title = snip.title;
+                    const desc = snip.description;
+                    const thurl = snip.thumbnails.medium?.url || snip.thumbnails.default?.url;
+                    const cntitle = snip.channelTitle;
+                    const ptime = new Date(snip.publishTime).toLocaleDateString();
+                    sar.appendChild(document.createRange().createContextualFragment(`
+                        <span onclick="openVideo('${vid.replaceAll("'", "\\'")}', '${title.replaceAll("'", "\\'")}', '${desc.replaceAll("'", "\\'")}', '${cntitle.replaceAll("'", "\\'")}', '${ptime.replaceAll("'", "\\'")}')" role="button">
+                            <img alt="Hình ảnh ${title}" width="320" height="180" src="${thurl}">
+                            <h1 style="width: 320px">${title}</h1>
+                            <p style="width: 320px">Kênh: ${cntitle} | Ngày đăng: ${ptime}</p>
+                        </span>
+                    `));
+                });
+            } catch (e) {
+                console.log(e);
+                document.querySelector(".search-area").innerHTML = "<span style=\"color: red\"><i class=\"fa-solid fa-circle-exclamation\"></i> Lỗi tìm kiếm</span>";
+            } finally {
+                document.querySelector(".srchid").disabled = false;
+            }
+        }
+        async function openVideo(id, title, desc, channel, pubtime){
+            const plarea = document.createElement("div");
+            plarea.style = "position: fixed; top: 0; left: 0; width: 100%; height: 100%";
+            document.body.appendChild(plarea);
+            plarea.id = "plyr-id";
+            const ytb = new window.YT.Player("plyr-id", {
+                width: 839,
+                height: 472,
+                videoId: id,
+                playerVars: {
+                    playsinline: 1,
+                    autoplay: 1,
+                    controls: 1,
+                    rel: 0,
+                    modestbranding: 0,
+                    origin: window.location.origin,
+                    widget_referrer: window.location.href,
+                    enablejsapi: 1
+                }
+            });
+        }
+    </script>
+</html>
