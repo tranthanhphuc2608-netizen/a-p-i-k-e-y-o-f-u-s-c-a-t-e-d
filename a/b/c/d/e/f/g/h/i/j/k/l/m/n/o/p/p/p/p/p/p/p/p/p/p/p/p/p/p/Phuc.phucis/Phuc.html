@@ -125,7 +125,7 @@
                 });
             } catch (e) {
                 console.log(e);
-                document.querySelector(".search-area").innerHTML = "<span style=\"color: red\"><i class=\"fa-solid fa-circle-exclamation\"></i> Lỗi tìm kiếm</span>";
+                document.querySelector(".search-area").innerHTML = `<span style=\"color: red\"><i class=\"fa-solid fa-circle-exclamation\"></i> Lỗi tìm kiếm</span>: ${e}`;
             } finally {
                 document.querySelector(".srchid").disabled = false;
             }
