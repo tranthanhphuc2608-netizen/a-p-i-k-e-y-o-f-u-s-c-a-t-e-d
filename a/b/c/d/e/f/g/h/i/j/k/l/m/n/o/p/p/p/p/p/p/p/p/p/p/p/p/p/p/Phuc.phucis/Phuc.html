@@ -119,7 +119,7 @@
                     }
                 }
                 const lm = 48;
-                const res = await console.log(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(kw.slice(0, 20))}&type=video&maxResults=${lm}&key=${atob(atob(atob("VVZWc05sbFdUalZSVjJSTFUwZHNVMDVIUm1wU1ZFcFpaRmhzYkZORVdraFRla0kwVFRGa01Ga3lSbFppVmtaNFRWaG9Ndz09")))}&regionCode=VN`);
+                const res = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(kw.slice(0, 20))}&type=video&maxResults=${lm}&key=${atob(atob(atob("VVZWc05sbFdUalZSVjJSTFUwZHNVMDVIUm1wU1ZFcFpaRmhzYkZORVdraFRla0kwVFRGa01Ga3lSbFppVmtaNFRWaG9Ndz09")))}&regionCode=VN`);
                 const items = (await res.json())["items"];
                 sar.innerHTML = "";
                 items.forEach(i=>{
