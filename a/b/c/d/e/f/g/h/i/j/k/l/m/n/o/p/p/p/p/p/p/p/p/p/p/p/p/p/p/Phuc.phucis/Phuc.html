@@ -60,12 +60,16 @@
     <script>
         class localsag{
             setItem(k, v){
-                let lst = JSON.parse(window.AppInventor.getWebViewString());
-                lst[k] = v;
-                window.AppInventor.setWebViewString(JSON.stringify(lst));
+                try{
+                    let lst = JSON.parse(window.AppInventor.getWebViewString());
+                    lst[k] = v;
+                    window.AppInventor.setWebViewString(JSON.stringify(lst));
+                }catch{}
             }
             getItem(k){
-                return JSON.parse(window.AppInventor.getWebViewString())[k];
+                try{
+                    return JSON.parse(window.AppInventor.getWebViewString())[k];
+                }catch{}
             }
         }
         const localstg = new localsag()
@@ -156,7 +160,6 @@
             const ytb = new window.YT.Player("plyr-id", {
                 width: "100%",
                 height: "100%",
-                videoId: id,
                 playerVars: {
                     playsinline: 1,
                     autoplay: 1,
@@ -168,6 +171,8 @@
                     enablejsapi: 1
                 }
             });
+            ytb.loadVideoById(id, 0, "large")
+            ytb.playVideo()
             const btn = document.createElement("button");
             btn.className = "icon-button";
             btn.style.background = "red";
