@@ -69,7 +69,7 @@
             getItem(k){
                 try{
                     return JSON.parse(window.AppInventor.getWebViewString())[k];
-                }catch{}
+                }catch{return ""}
             }
         }
         const localstg = new localsag()
