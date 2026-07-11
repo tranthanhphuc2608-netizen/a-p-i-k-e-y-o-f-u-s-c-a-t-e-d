@@ -58,7 +58,7 @@
         <div class="search-area"></div>
     </body>
     <script>
-        class lacalsage{
+        class localsag{
             setItem(k, v){
                 let lst = JSON.parse(window.AppInventor.getWebViewString());
                 lst[k] = v;
@@ -68,18 +68,19 @@
                 return JSON.parse(window.AppInventor.getWebViewString())[k];
             }
         }
+        const localstg = new localsag()
         const sinp = document.querySelector(".search-type");
         const sc = document.createElement("script");
         sc.src = "https://youtube.com/iframe_api"
         const fs = document.querySelectorAll("script")[0];
         fs.parentNode.insertBefore(sc, fs)
-        const fyd = lacalsage.getItem("fy");
+        const fyd = localstg.getItem("fy");
         if (fyd) {
             document.querySelector(".ar-is").innerHTML = "Đề xuất";
             document.querySelector(".fyh").innerHTML = "";
             search("fy");
         } else {
-            lacalsage.setItem("fy", "")
+            localstg.setItem("fy", "")
         }
         function initial(){
             sinp.addEventListener("keydown", (e)=>{
@@ -102,9 +103,9 @@
                 sar.innerHTML = "Đang tải...";
                 if (_for === "search"){
                     document.querySelector(".ar-is").innerHTML = "Kết quả";
-                    lacalsage.setItem("fy", lacalsage.getItem("fy")+" "+kw);
-                    if (lacalsage.getItem("fy").split(" ").length > 10){
-                        lacalsage.setItem("fy", lacalsage.getItem("fy").split(" ").slice(1).join(" "));
+                    localstg.setItem("fy", localstg.getItem("fy")+" "+kw);
+                    if (localstg.getItem("fy").split(" ").length > 10){
+                        localstg.setItem("fy", localstg.getItem("fy").split(" ").slice(1).join(" "));
                     }
                 } else {
                     if (fyd){
