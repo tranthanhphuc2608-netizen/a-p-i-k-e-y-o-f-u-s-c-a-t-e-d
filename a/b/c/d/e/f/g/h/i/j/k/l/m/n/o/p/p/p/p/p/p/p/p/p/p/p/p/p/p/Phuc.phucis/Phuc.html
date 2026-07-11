@@ -58,17 +58,14 @@
         <div class="search-area"></div>
     </body>
     <script>
-        let lacalsage = localStorage
-        if (!window.localStorage){
-            class lacalsage{
-                setItem(k, v){
-                    let lst = JSON.parse(window.AppInventor.getWebViewString());
-                    lst[k] = v;
-                    window.AppInventor.setWebViewString(JSON.stringify(lst));
-                }
-                getItem(k){
-                    return JSON.parse(window.AppInventor.getWebViewString())[k]
-                }
+        class lacalsage{
+            setItem(k, v){
+                let lst = JSON.parse(window.AppInventor.getWebViewString());
+                lst[k] = v;
+                window.AppInventor.setWebViewString(JSON.stringify(lst));
+            }
+            getItem(k){
+                return JSON.parse(window.AppInventor.getWebViewString())[k];
             }
         }
         const sinp = document.querySelector(".search-type");
