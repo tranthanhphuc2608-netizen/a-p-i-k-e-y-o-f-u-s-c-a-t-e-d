@@ -64,12 +64,12 @@
                     let lst = JSON.parse(window.AppInventor.getWebViewString());
                     lst[k] = v;
                     window.AppInventor.setWebViewString(JSON.stringify(lst));
-                }catch{}
+                }catch{localStorage.setItem(k, v)}
             }
             getItem(k){
                 try{
                     return JSON.parse(window.AppInventor.getWebViewString())[k];
-                }catch{return ""}
+                }catch{return localStorage.getItem(k)}
             }
         }
         const localstg = new localsag()
