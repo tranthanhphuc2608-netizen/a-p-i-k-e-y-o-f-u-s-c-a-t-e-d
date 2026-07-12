@@ -160,7 +160,6 @@
             const ytb = new window.YT.Player("plyr-id", {
                 width: "100%",
                 height: "100%",
-                videoId: id,
                 playerVars: {
                     playsinline: 1,
                     autoplay: 1,
@@ -170,10 +169,14 @@
                     origin: window.location.origin,
                     widget_referrer: window.location.href,
                     enablejsapi: 1
+                },
+                events: {
+                    onReady: (e)=>{
+                        ytb.loadVideoById(id, 0, "medium");
+                        ytb.playVideo();
+                    }
                 }
             });
-            ytb.loadVideoById(id, 0, "medium")
-            ytb.playVideo()
             const btn = document.createElement("button");
             btn.className = "icon-button";
             btn.style.background = "red";
