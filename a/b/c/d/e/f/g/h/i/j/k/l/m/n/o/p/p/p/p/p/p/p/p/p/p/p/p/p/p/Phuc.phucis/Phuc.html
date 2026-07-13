@@ -146,17 +146,18 @@
             }
         }
         async function openVideo(id, title, desc, channel, pubtime){
+            const lasc = document.documentElement.scrollTop;
             window.scrollTo(0, 0);
             const plarea = document.createElement("div");
             plarea.style.position = "absolute";
             plarea.style.top = 0;
             plarea.style.left = 0;
             plarea.style.margin = 0;
-            plarea.style.width = "100vw";
-            plarea.style.height = "100vh";
             document.body.style.overflow = "hidden";
             document.body.insertBefore(plarea, document.body.firstElementChild);
             plarea.id = "plyr-id";
+            plarea.style.width = "854";
+            plarea.style.height = "480";
             const ytb = new window.YT.Player("plyr-id", {
                 width: "854",
                 height: "480",
@@ -178,7 +179,9 @@
                             ytb.getIframe().style.width = "100%";
                             ytb.getIframe().style.height = "100%";
                             ytb.setPlaybackQuality("large");
-                        }, 1000)
+                            plarea.style.width = "100vw";
+                            plarea.style.height = "100vh";
+                        }, 2000)
                     }
                 }
             });
@@ -197,6 +200,7 @@
                 plarea.remove();
                 document.body.style.overflow = "auto";
                 btn.remove();
+                window.scrollTo(0, lasc)
             }
             document.body.appendChild(btn)
         }
