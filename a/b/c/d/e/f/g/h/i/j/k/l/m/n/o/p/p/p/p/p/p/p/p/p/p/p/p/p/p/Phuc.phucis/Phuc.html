@@ -45,6 +45,12 @@
                 display: flex;
                 flex-wrap: wrap;
             }
+            .sban {
+                cursor: pointer;
+            }
+            .sban:hover {
+                scale: 1.1;
+            }
         </style>
     </head>
     <body>
@@ -130,12 +136,15 @@
                     const thurl = snip.thumbnails.medium?.url || snip.thumbnails.default?.url;
                     const cntitle = snip.channelTitle;
                     const ptime = new Date(snip.publishTime).toLocaleDateString();
-                    sar.appendChild(document.createRange().createContextualFragment(`
-                        <span onclick="openVideo('${vid.replaceAll("'", "\\'")}', '${title.replaceAll("'", "\\'")}', '${desc.replaceAll("'", "\\'")}', '${cntitle.replaceAll("'", "\\'")}', '${ptime.replaceAll("'", "\\'")}')" role="button">
-                            <img alt="Hình ảnh ${title}" width="320" height="180" src="${thurl}">
-                            <h1 style="width: 320px">${title}</h1>
-                            <p style="width: 320px">Kênh: ${cntitle} | Ngày đăng: ${ptime}</p>
-                        </span>
+                    const ispan = document.createElement("span");
+                    ispan.onclick = (e)=>{openVideo(vid, title, desc, cntitle, ptime)}
+                    ispan.role = "button";
+                    ispan.className = "sban";
+                    sar.appendChild(ispan);
+                    ispan.appendChild(document.createRange().createContextualFragment(`
+                        <img alt="Hình ảnh ${title}" width="320" height="180" src="${thurl}">
+                        <h1 style="width: 320px">${title}</h1>
+                        <p style="width: 320px">Kênh: ${cntitle} | Ngày đăng: ${ptime}</p>
                     `));
                 });
             } catch (e) {
@@ -156,14 +165,23 @@
             document.body.style.overflow = "hidden";
             document.body.insertBefore(plarea, document.body.firstElementChild);
             plarea.id = "plyr-id";
-            plarea.style.width = "854";
-            plarea.style.height = "480";
+            plarea.style.width = "1";
+            plarea.style.height = "1";
+            const lding = document.createElement("div");
+            lding.style.borderRadius = "5px";
+            lding.style.color = "white";
+            lding.style.background = "black";
+            lding.style.position = "absolute";
+            lding.style.left = "50vw";
+            lding.style.top = "20px";
+            lding.innerHTML = "Đang tải... <img width=\"200\" height=\"100\" src=\"https://raw.githubusercontent.com/tranthanhphuc2608-netizen/a-p-i-k-e-y-o-f-u-s-c-a-t-e-d/refs/heads/main/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/p/p/p/p/p/p/p/p/p/p/p/p/p/Phuc.phucis/Video%20Project%202.gif\" alt=\"H%C3%ACnh loading\">";
+            document.body.appendChild(lding);
             const ytb = new window.YT.Player("plyr-id", {
-                width: "854",
-                height: "480",
+                width: "1",
+                height: "1",
                 playerVars: {
                     playsinline: 1,
-                    autoplay: 1,
+                    autoplay: 0,
                     controls: 1,
                     rel: 0,
                     modestbranding: 0,
@@ -176,12 +194,16 @@
                         ytb.loadVideoById(id, 0, "large");
                         setTimeout(()=>{
                             ytb.playVideo();
-                            ytb.getIframe().style.width = "100%";
-                            ytb.getIframe().style.height = "100%";
-                            ytb.setPlaybackQuality("large");
-                            plarea.style.width = "100vw";
-                            plarea.style.height = "100vh";
-                        }, 5000)
+                            setTimeout(()=>{
+                                ytb.getIframe().style.width = "100%";
+                                ytb.getIframe().style.height = "100%";
+                                ytb.setPlaybackQuality("large");
+                                plarea.style.width = "100vw";
+                                plarea.style.height = "100vh";
+                                ytb.getIframe().sandbox = "allow-scripts";
+                                lding.remove()
+                            }, 200)
+                        }, 2500)
                     }
                 }
             });
